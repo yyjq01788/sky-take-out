@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController("userShopController")
 @RequestMapping("/user/shop")
 @Api(tags = "店铺相关接口")
@@ -29,7 +31,7 @@ public class ShopController {
     @ApiOperation("获取店铺的营业状态")
     public Result<Integer> getStatus(){
         Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
-        log.info("获取到店铺营业状态为：{}",status == 1? "营业中" : "打样中");
+        log.info("获取到店铺营业状态为：{}", Objects.equals(status, 1)? "营业中" : "打样中");
         return Result.success(status);
     }
 }
